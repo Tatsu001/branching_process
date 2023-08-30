@@ -43,7 +43,7 @@ impl Indivisual {
 
 fn main() {
 
-    let x0y = Indivisual::new(Dist::Poisson, 1.5, 0, 0, 0);
+    let x0y = Indivisual::new(Dist::Poisson, 0.5, 0, 0, 0);
     let x0y_vec = vec![x0y];
     let x0 = GenerationX { id: 0, parents: x0y_vec};
 
@@ -55,9 +55,13 @@ fn main() {
         let mut id = 0;
         let mut parents_id = 0;
         let mut next_parents: Vec<Indivisual> = vec![];
+        if x[gen_id].parents.len() == 0 {
+            println!("Everybody DEAD");
+            break;
+        }
         for i in 0..x[gen_id].parents.len() {
             for _ in 0..x[gen_id].parents[i].children_len {
-                let borned = Indivisual::new(Dist::Poisson, 1.5, gen_id as i32, parents_id, id);
+                let borned = Indivisual::new(Dist::Poisson, 0.5, gen_id as i32, parents_id, id);
                 next_parents.push(borned);
                 id += 1;
             }
@@ -68,10 +72,6 @@ fn main() {
         x.push(generation);
         gen_id += 1;
 
-        if gen_id == 10 {
-            println!("now tree is {:?}", x[3]);
-            break;
-        }
     }
 
 }
